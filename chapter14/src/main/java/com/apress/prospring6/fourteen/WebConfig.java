@@ -162,6 +162,38 @@ public class WebConfig  implements WebMvcConfigurer, ApplicationContextAware {
         return messageResource;
     }
 
+    /*The LocaleChangeInterceptor and CookieLocaleResolver work together to provide a seamless mechanism for handling and
+        managing the user's preferred locale in a Spring MVC application.
+
+    Here's how these two components collaborate:
+
+    Locale Change Request:
+    The LocaleChangeInterceptor monitors incoming requests for indications of a desired locale change.
+    This can be achieved through request parameters, headers, or any other custom mechanism you configure.
+    When the LocaleChangeInterceptor detects a request indicating a locale change, it updates the user's locale based on
+    the provided information. This updated locale is temporarily stored in the user's session for the duration of the request processing.
+
+    Locale Resolution with CookieLocaleResolver:
+    After the LocaleChangeInterceptor has updated the user's locale, the CookieLocaleResolver comes into play.
+    When the CookieLocaleResolver is invoked during the request processing, it first checks if there's a cookie with the
+    specified name (e.g., "myLocaleCookie") in the incoming request.
+
+    Using Stored Locale from Cookie:
+    If the cookie is found and contains a valid locale value, the CookieLocaleResolver retrieves the locale information
+    from the cookie and uses it as the user's preferred locale for the current request.
+    This allows the user's preference stored in the cookie to override any temporary changes made by the LocaleChangeInterceptor.
+
+    Storing Updated Locale in Cookie:
+    If the LocaleChangeInterceptor changes the user's locale based on the request, and if the application is configured to
+    store locale changes in cookies, the CookieLocaleResolver can update the response by setting a cookie with the updated locale information.
+    This cookie will be sent back to the user's browser and will be included in subsequent requests, ensuring that the user's
+    locale preference is consistently applied across multiple interactions with the application.
+    By working together, the LocaleChangeInterceptor allows for temporary changes to the user's preferred locale during
+    a specific request, while the CookieLocaleResolver ensures that the user's long-term preferred locale, stored in a cookie,
+    remains intact and influences subsequent requests. This collaboration provides a comprehensive and flexible way to manage
+    user locale preferences in a Spring MVC application, enabling seamless language and region handling for internationalization
+    and localization needs.*/
+
     @Bean
     LocaleChangeInterceptor localeChangeInterceptor() {
         var localeChangeInterceptor = new LocaleChangeInterceptor();
